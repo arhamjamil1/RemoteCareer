@@ -1,6 +1,6 @@
 import pytest
 from playwright.sync_api import sync_playwright
-import os
+from config import Config
 
 
 @pytest.fixture
@@ -18,8 +18,8 @@ def page():
 def logged_in_page(page):
     from pages.login_page import LoginPage
 
-    username = os.getenv("TEST_USERNAME")
-    password = os.getenv("TEST_PASSWORD")
+    username = Config.TEST_USERNAME
+    password = Config.TEST_PASSWORD
 
     login_page = LoginPage(page)
 

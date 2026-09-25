@@ -3,4 +3,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-BASE_URL = os.getenv("BASE_URL")
+
+class Config:
+    BASE_URL = os.getenv("BASE_URL")
+    TEST_USERNAME = os.getenv("TEST_USERNAME")
+    TEST_PASSWORD = os.getenv("TEST_PASSWORD")

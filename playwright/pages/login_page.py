@@ -1,4 +1,4 @@
-from config import BASE_URL
+from config import Config
 class LoginPage:
 
     def __init__(self, page):
@@ -11,7 +11,7 @@ class LoginPage:
         self.logout_link = "#logout_sidebar_link"
 
     def open(self):
-        self.page.goto(BASE_URL)
+        self.page.goto(Config.BASE_URL)
 
     def login(self, username, password):
         self.page.fill(self.username, username)
