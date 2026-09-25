@@ -41,10 +41,10 @@ jobs:
           playwright install --with-deps chromium
 
       - name: Run Playwright tests
-  env:
-    PLAYWRIGHT_BASE_URL: https://www.saucedemo.com/
-    TEST_USERNAME: standard_user
-    TEST_PASSWORD: secret_sauce
-  run: |
-    cd playwright
-    python -m pytest tests -v --html=test-results/report.html --self-contained-html
+        env:
+          PLAYWRIGHT_BASE_URL: https://www.saucedemo.com/
+          TEST_USERNAME: standard_user
+          TEST_PASSWORD: secret_sauce
+        run: |
+          cd playwright
+          python -m pytest tests -v --html=test-results/report.html --self-contained-html
