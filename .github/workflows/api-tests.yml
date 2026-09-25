@@ -43,4 +43,11 @@ jobs:
       - name: Run Playwright tests
         run: |
           cd playwright
-          python -m pytest tests -v
+          python -m pytest tests -v --html=test-results/report.html --self-contained-html
+
+      - name: Upload Playwright HTML report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-html-report
+          path: playwright/test-results/report.html
