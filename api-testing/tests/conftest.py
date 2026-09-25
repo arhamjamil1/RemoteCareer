@@ -1,5 +1,7 @@
 import pytest
+from config import BASE_URL
+
 
 @pytest.fixture
 def base_url():
-    return "https://jsonplaceholder.typicode.com"
+    return BASE_URL
