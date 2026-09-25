@@ -4,6 +4,8 @@ import pytest
 from playwright.sync_api import sync_playwright
 
 from config import Config
+from pages.login_page import LoginPage
+from utils.screenshots import save_screenshot
 
 
 @pytest.hookimpl(hookwrapper=True)
@@ -16,29 +18,32 @@ def pytest_runtest_makereport(item, call):
 @pytest.fixture
 def page(request):
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
+        browser = p.chromium.launch(
+            headless=Config.HEADLESS
+            )
         page = browser.new_page()
 
         yield page
 
         if hasattr(request.node, "rep_call") and request.node.rep_call.failed:
-            os.makedirs("test-results", exist_ok=True)
-            screenshot_path = f"test-results/{request.node.name}.png"
-            page.screenshot(path=screenshot_path)
+            save_screenshot(
+            page,
+            request.node.name
+            )
 
         browser.close()
 
 
 @pytest.fixture
+def login_page(page):
+    return LoginPage(page)
+
+
+@pytest.fixture
 def logged_in_page(page):
-    from pages.login_page import LoginPage
-
-    username = Config.TEST_USERNAME
-    password = Config.TEST_PASSWORD
-
     login_page = LoginPage(page)
 
     login_page.open()
-    login_page.login(username, password)
+    login_page.login()
 
-    return page
+    return login_page
