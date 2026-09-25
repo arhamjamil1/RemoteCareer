@@ -1,4 +1,5 @@
-company.db 
-__pycache__/ 
+company.db
+__pycache__/
 .env
 test-results.xml
+test-results/
