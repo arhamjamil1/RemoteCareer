@@ -1,5 +1,5 @@
 import requests
-
+import pytest
 
 def test_get_user(base_url):
     response = requests.get(
@@ -69,3 +69,15 @@ def test_delete_post(base_url):
     )
 
     assert response.status_code == 200
+
+@pytest.mark.parametrize("user_id", [1, 2, 3])
+def test_multiple_users(base_url, user_id):
+    response = requests.get(
+        f"{base_url}/users/{user_id}"
+    )
+
+    assert response.status_code == 200
+
+    data = response.json()
+
+    assert data["id"] == user_id
