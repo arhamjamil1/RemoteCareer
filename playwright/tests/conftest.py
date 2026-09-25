@@ -1,12 +1,16 @@
+import os
+
 import pytest
 from playwright.sync_api import sync_playwright
+
 from config import Config
+
 
 @pytest.hookimpl(hookwrapper=True)
 def pytest_runtest_makereport(item, call):
     outcome = yield
-    rep = outcome.get_result()
-    setattr(item, "rep_" + rep.when, rep)
+    report = outcome.get_result()
+    setattr(item, "rep_" + report.when, report)
 
 
 @pytest.fixture
@@ -17,11 +21,13 @@ def page(request):
 
         yield page
 
-        if request.node.rep_call.failed:
+        if hasattr(request.node, "rep_call") and request.node.rep_call.failed:
+            os.makedirs("test-results", exist_ok=True)
             screenshot_path = f"test-results/{request.node.name}.png"
             page.screenshot(path=screenshot_path)
 
         browser.close()
+
 
 @pytest.fixture
 def logged_in_page(page):
