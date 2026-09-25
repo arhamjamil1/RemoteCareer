@@ -32,4 +32,4 @@ jobs:
       - name: Run API tests
         run: |
           cd api-testing
-          python -m pytest tests -v
+          python -m pytest tests -v --junitxml=test-results.xml
