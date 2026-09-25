@@ -33,3 +33,13 @@ jobs:
         run: |
           cd api-testing
           python -m pytest tests -v --junitxml=test-results.xml
+
+            - name: Install Playwright browsers
+        run: |
+          cd playwright
+          playwright install --with-deps chromium
+
+      - name: Run Playwright tests
+        run: |
+          cd playwright
+          python -m pytest tests -v
