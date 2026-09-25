@@ -1,21 +1,13 @@
-from playwright.sync_api import sync_playwright
 from pages.login_page import LoginPage
 from pages.products_page import ProductsPage
 
 
-def test_products_page():
-    with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
+def test_products_page(page):
+    login_page = LoginPage(page)
+    products_page = ProductsPage(page)
 
-        page = browser.new_page()
+    login_page.open()
+    login_page.login("standard_user", "secret_sauce")
 
-        login_page = LoginPage(page)
-        products_page = ProductsPage(page)
-
-        login_page.open()
-        login_page.login("standard_user", "secret_sauce")
-
-        assert products_page.get_title() == "Products"
-        assert products_page.get_product_count() > 0
-
-        browser.close()
+    assert products_page.get_title() == "Products"
+    assert products_page.get_product_count() > 0
