@@ -24,7 +24,7 @@ jobs:
         with:
           python-version: "3.13"
 
-      - name: Install dependencies
+      - name: Install API dependencies
         run: |
           cd api-testing
           pip install -r requirements.txt
@@ -34,9 +34,10 @@ jobs:
           cd api-testing
           python -m pytest tests -v --junitxml=test-results.xml
 
-            - name: Install Playwright browsers
+      - name: Install Playwright dependencies
         run: |
           cd playwright
+          pip install -r requirements.txt
           playwright install --with-deps chromium
 
       - name: Run Playwright tests
