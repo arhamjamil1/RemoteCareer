@@ -1,5 +1,6 @@
 import pytest
 from pages.login_page import LoginPage
+from pages.products_page import ProductsPage
 
 
 def test_open_login_page(page):
@@ -9,10 +10,11 @@ def test_open_login_page(page):
 
     assert page.title() == "Swag Labs"
 
-    login_page.login("standard_user", "secret_sauce")
+    login_page.login()
 
     assert page.url == "https://www.saucedemo.com/inventory.html"
-    assert page.locator(".title").inner_text() == "Products"
+    products_page = ProductsPage(page)
+    assert products_page.get_title() == "Products"
 
 
 def test_logout(logged_in_page):
