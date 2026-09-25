@@ -13,6 +13,8 @@ def test_get_user(base_url):
     assert data["id"] == 1
     assert data["name"] == "Leanne Graham"
     assert data["email"] is not None
+    assert isinstance(data["id"], int)
+    assert isinstance(data["name"], str)
 
 def test_user_not_found(base_url):
     response = requests.get(
