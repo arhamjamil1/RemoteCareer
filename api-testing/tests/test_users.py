@@ -1,9 +1,9 @@
 import requests
 
 
-def test_get_user():
+def test_get_user(base_url):
     response = requests.get(
-        "https://jsonplaceholder.typicode.com/users/1"
+        f"{base_url}/users/1"
     )
 
     assert response.status_code == 200
@@ -14,14 +14,14 @@ def test_get_user():
     assert data["name"] == "Leanne Graham"
     assert data["email"] is not None
 
-def test_user_not_found():
+def test_user_not_found(base_url):
     response = requests.get(
-        "https://jsonplaceholder.typicode.com/users/999"
+        f"{base_url}/users/999"
     )
 
     assert response.status_code == 404
 
-def test_create_post():
+def test_create_post(base_url):
     data = {
         "title": "Arham API Test",
         "body": "Learning API automation",
@@ -29,7 +29,7 @@ def test_create_post():
     }
 
     response = requests.post(
-        "https://jsonplaceholder.typicode.com/posts",
+        f"{base_url}/posts",
         json=data
     )
 
@@ -42,7 +42,7 @@ def test_create_post():
     assert response_data["userId"] == 1
     assert "id" in response_data
 
-def test_update_post():
+def test_update_post(base_url):
     data = {
         "id": 1,
         "title": "Arham Updated Test",
@@ -51,7 +51,7 @@ def test_update_post():
     }
 
     response = requests.put(
-        "https://jsonplaceholder.typicode.com/posts/1",
+        f"{base_url}/posts/1",
         json=data
     )
 
@@ -63,9 +63,9 @@ def test_update_post():
     assert response_data["title"] == "Arham Updated Test"
     assert response_data["body"] == "Updated API testing"
 
-def test_delete_post():
+def test_delete_post(base_url):
     response = requests.delete(
-        "https://jsonplaceholder.typicode.com/posts/1"
+        f"{base_url}/posts/1"
     )
 
     assert response.status_code == 200
