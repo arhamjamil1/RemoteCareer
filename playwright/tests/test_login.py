@@ -14,12 +14,9 @@ def test_open_login_page(page):
     assert page.locator(".title").inner_text() == "Products"
 
 
-def test_logout(page):
-    login_page = LoginPage(page)
-
-    login_page.open()
-    login_page.login("standard_user", "secret_sauce")
+def test_logout(logged_in_page):
+    login_page = LoginPage(logged_in_page)
 
     login_page.logout()
 
-    assert page.url == "https://www.saucedemo.com/"
+    assert logged_in_page.url == "https://www.saucedemo.com/"

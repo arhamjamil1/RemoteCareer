@@ -12,3 +12,14 @@ def page():
         yield page
 
         browser.close()
+
+@pytest.fixture
+def logged_in_page(page):
+    from pages.login_page import LoginPage
+
+    login_page = LoginPage(page)
+
+    login_page.open()
+    login_page.login("standard_user", "secret_sauce")
+
+    return page
