@@ -1,4 +1,5 @@
 from playwright.sync_api import sync_playwright
+from pages.login_page import LoginPage
 
 
 def test_open_login_page():
@@ -11,9 +12,8 @@ def test_open_login_page():
 
         assert page.title() == "Swag Labs"
 
-        page.fill("#user-name", "standard_user")
-        page.fill("#password", "secret_sauce")
-        page.click("#login-button")
+        login_page = LoginPage(page)
+        login_page.login("standard_user", "secret_sauce")
         
         assert page.url == "https://www.saucedemo.com/inventory.html"
         assert page.locator(".title").inner_text() == "Products"
@@ -26,14 +26,12 @@ def test_logout():
 
         page = browser.new_page()
 
-        page.goto("https://www.saucedemo.com/")
+        login_page = LoginPage(page)
 
-        page.fill("#user-name", "standard_user")
-        page.fill("#password", "secret_sauce")
-        page.click("#login-button")
+        login_page.open()
+        login_page.login("standard_user", "secret_sauce")
 
-        page.click("#react-burger-menu-btn")
-        page.click("#logout_sidebar_link")
+        login_page.logout()
 
         assert page.url == "https://www.saucedemo.com/"
 

@@ -1,4 +1,6 @@
 from playwright.sync_api import sync_playwright
+from pages.login_page import LoginPage
+from pages.products_page import ProductsPage
 
 
 def test_products_page():
@@ -7,16 +9,13 @@ def test_products_page():
 
         page = browser.new_page()
 
-        page.goto("https://www.saucedemo.com/")
+        login_page = LoginPage(page)
+        products_page = ProductsPage(page)
 
-        page.fill("#user-name", "standard_user")
-        page.fill("#password", "secret_sauce")
-        page.click("#login-button")
+        login_page.open()
+        login_page.login("standard_user", "secret_sauce")
 
-        assert page.locator(".title").inner_text() == "Products"
-
-        products = page.locator(".inventory_item")
-
-        assert products.count() > 0
+        assert products_page.get_title() == "Products"
+        assert products_page.get_product_count() > 0
 
         browser.close()
